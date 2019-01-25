@@ -1,0 +1,35 @@
+#!/usr/bin/env sh
+
+# Exit, if return non-zero or use an undefined variable.
+set -eu
+
+cd "$(dirname "$0")/.."
+
+# Variables
+VERSION=${1:-1.11.5}
+
+os=$(./bin/os)
+distro=$(./bin/distro)
+
+if [ $os = win ]; then
+	ARCHIVE_BASE=go$VERSION.windows-amd64
+	ARCHIVE_FILE=$ARCHIVE_BASE.zip
+elif [ $os = mac ]; then
+	ARCHIVE_BASE=go$VERSION.darwin-amd64
+	ARCHIVE_FILE=$ARCHIVE_BASE.tar.gz
+else
+	ARCHIVE_BASE=go$VERSION.linux-amd64
+	ARCHIVE_FILE=$ARCHIVE_BASE.tar.gz
+fi
+
+DOWNLOAD_URL=https://dl.google.com/go/$ARCHIVE_FILE
+
+# Clean
+clean() {
+	rm -rf temp
+}
+
+# Start
+clean
+filename=$(./bin/download $DOWNLOAD_URL)
+./bin/extract "$filename" "versions/$VERSION"
