@@ -11,10 +11,10 @@ VERSION=${1:-1.11.5}
 os=$(./bin/os)
 distro=$(./bin/distro)
 
-if [ $os = win ]; then
+if [ $os = windows ]; then
 	ARCHIVE_BASE=go$VERSION.windows-amd64
 	ARCHIVE_FILE=$ARCHIVE_BASE.zip
-elif [ $os = mac ]; then
+elif [ $os = darwin ]; then
 	ARCHIVE_BASE=go$VERSION.darwin-amd64
 	ARCHIVE_FILE=$ARCHIVE_BASE.tar.gz
 else
